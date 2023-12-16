@@ -1,0 +1,11 @@
+{
+  "name": "calc_folder",
+  "version": "1.0.0",
+  "description": "calculator module developed node course",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Vatsal Jain",
+  "license": "ISC"
+}
