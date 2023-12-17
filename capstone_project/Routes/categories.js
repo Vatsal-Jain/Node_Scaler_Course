@@ -1,20 +1,6 @@
 const express = require("express");
-const Joi = require("joi");
+const { CategoryModel, validateData } = require("../Models/categoryModel");
 const router = express.Router();
-
-const mongoose = require("mongoose");
-
-
-const categorySchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-    minLength: 3,
-    maxLength: 30,
-  },
-});
-
-const CategoryModel = new mongoose.model("Category", categorySchema);
 
 const categories = [
   {
@@ -34,14 +20,6 @@ const categories = [
     name: "Nutrucales",
   },
 ];
-
-function validateData(category) {
-  const schema = Joi.object({
-    name: Joi.string().min(3).required(),
-  });
-
-  return schema.validate(category);
-}
 
 router.get("/", async (req, res) => {
   let categories = await CategoryModel.find();
@@ -81,13 +59,11 @@ router.delete("/:id", async (req, res) => {
   res.send(categoryToDelete);
 });
 
-
 router.get("/:id", async (req, res) => {
-    const category = await CategoryModel.findById(req.params.id);
-    if (!category)
-      return res.status(401).send("The Category With Id not found");
-    res.send(category);
-  });
+  const category = await CategoryModel.findById(req.params.id);
+  if (!category) return res.status(401).send("The Category With Id not found");
+  res.send(category);
+});
 
 // router.get('/',(req,res) => {
 //     res.send(categories)
